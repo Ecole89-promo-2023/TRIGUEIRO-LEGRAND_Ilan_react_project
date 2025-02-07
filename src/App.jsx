@@ -1,18 +1,20 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
-import  Home  from "./pages/Home";
-import { BrowserRouter, Route, Routes } from 'react-router';
+import CardInfoPage from './pages/CardInfoPage';
+import Home from "./pages/Home";
+import CardByNamePage from './pages/CardByNamePage';
 
 function App() {
   return (
-    <>
-    <Header />
     <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Home />} />
-    </Routes>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path='/card/:id' element={<CardInfoPage />} />
+        <Route path='/card' element={<CardByNamePage />} />
+      </Routes>
     </BrowserRouter>
-    </>
   )
 }
 
-export default App
+export default App;

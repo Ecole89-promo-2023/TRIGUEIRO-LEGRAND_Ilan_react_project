@@ -4,4 +4,12 @@ let getAllCards = () => {
     return API.get("/cards");
 }
 
-export const Endpoints = { getAllCards };
+let getCard = (id) => {
+    return API.get(`/cards/${id}`);
+}
+
+let getCardByName = (name) => { 
+    return API.get(`/cards?name=${name}`);
+}
+
+export const Endpoints = { getAllCards , getCard, getCardByName };

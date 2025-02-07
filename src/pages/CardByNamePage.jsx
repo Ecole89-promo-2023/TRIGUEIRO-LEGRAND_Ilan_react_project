@@ -1,28 +1,24 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Endpoints } from "../_services/endpoints.services";
 import Card from "../components/Cards";
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
 
-const Home = () => {
+const CardByNamePage = () => {
   const [cards, setCards] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const name = searchParams.get('name');
 
   useEffect(() => {
-    const storedCards = localStorage.getItem('cards');
-    if (storedCards) {
-      console.log("Using cached data from local storage");
-      setCards(JSON.parse(storedCards));
-      setLoaded(true);
-    } else {
-      console.log("Fetching data from API");
-      Endpoints.getAllCards()
+    if (name) {
+      Endpoints.getCardByName(name)
         .then((response) => {
-          console.log(response.data);
           setCards(response.data);
-          localStorage.setItem('cards', JSON.stringify(response.data));
           setLoaded(true);
         })
         .catch((error) => {
@@ -30,7 +26,7 @@ const Home = () => {
           setError(error);
         });
     }
-  }, []);
+  }, [name]);
 
   if (!loaded) {
     return (
@@ -42,17 +38,15 @@ const Home = () => {
     return <div>Error: {error.message}</div>
   } else {
     return (
-      <>
-        <Container>
-          <Row lg={4} md={3} sm={2} xs={1}>
-            {cards.filter(card => card.image).map((card, index) => {
-              return <Card card={card} key={index} />
-            })}
-          </Row>
-        </Container>
-      </>
+      <Container>
+        <Row lg={4} md={3} sm={2} xs={1}>
+          {cards.filter(card => card.image).map((card, index) => {
+            return <Card card={card} key={index} />
+          })}
+        </Row>
+      </Container>
     )
   }
 }
 
-export default Home;
+export default CardByNamePage;
