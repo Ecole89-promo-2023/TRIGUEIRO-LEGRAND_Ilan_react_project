@@ -1,4 +1,4 @@
-import { Navbar, Container, Nav, Button, Form, Row, Col } from 'react-bootstrap';
+import { Navbar, Container, Nav, Button, Form, Row, Col, NavDropdown} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -41,6 +41,17 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
+          <NavDropdown title="Langues" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Français</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Englais
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Japonais</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
           <Form className="d-flex" onSubmit={handleSearch}>
             <Row>

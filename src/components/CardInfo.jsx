@@ -43,7 +43,7 @@ const CardInfo = ({ pokemon }) => {
                     <ListGroup.Item key={index} className="text-start">
                       <strong>{ability.name}</strong>
                       <br />
-                      <small><u>Effet</u> : {ability.effect }</small>
+                      <small className='text-muted'><u>Effet</u> : {ability.effect }</small>
                     </ListGroup.Item>
                   ))}
                 </ListGroup>

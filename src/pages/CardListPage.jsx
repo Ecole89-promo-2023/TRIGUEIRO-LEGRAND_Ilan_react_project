@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 
-const Home = () => {
+const CardListPage = () => {
   const [cards, setCards] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
@@ -79,4 +79,4 @@ const Home = () => {
   }
 }
 
-export default Home;
+export default CardListPage;
