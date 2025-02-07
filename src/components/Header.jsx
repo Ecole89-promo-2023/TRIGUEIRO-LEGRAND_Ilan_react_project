@@ -1,10 +1,23 @@
 import { Navbar, Container, Nav, Button, Form, Row, Col } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('darkMode')
+    return savedTheme == 'true';
+  });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+    }
+    localStorage.setItem('darkMode', darkMode);
+  }, [darkMode]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -14,6 +27,10 @@ const Header = () => {
   const clearLocalStorage = () => {
     localStorage.clear();
     window.location.reload();
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
   };
 
   return (
@@ -41,7 +58,15 @@ const Header = () => {
               </Col>
             </Row>
           </Form>
-          <Button className='mt-2' variant="danger" onClick={clearLocalStorage}>Vider le Cache</Button>
+          <Button variant="danger" onClick={clearLocalStorage}>Vider le Cache</Button>
+          <Form.Check 
+            type="switch"
+            id="custom-switch"
+            label="Dark Mode"
+            checked={darkMode}
+            onChange={toggleDarkMode}
+            className="ms-3"
+          />
         </Navbar.Collapse>
       </Container>
     </Navbar>

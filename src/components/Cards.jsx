@@ -10,11 +10,16 @@ const Cards = (props) => {
   };
 
   return (
+    // <Col>
+    //     <div className='m-4' onClick={handleCardClick} style={{ cursor: 'pointer' }}>
+    //         <Card.Img variant="top" src={props.card.image + "/high.webp"} />
+    //     </div>
+    // </Col>
     <Col>
-        <div className='m-4' onClick={handleCardClick} style={{ cursor: 'pointer' }}>
-            <Card.Img variant="top" src={props.card.image + "/high.webp"} />
-        </div>
-    </Col>
+    <div className='m-4 holographic-card' onClick={handleCardClick} style={{ cursor: 'pointer' }}>
+        <Card.Img variant="top" src={props.card.image + "/high.webp"} />
+    </div>
+</Col>
   );
 }
 
