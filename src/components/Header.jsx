@@ -49,8 +49,6 @@ const Header = () => {
               <NavDropdown.Item onClick={() => handleLangueChange('fr')}>Français</NavDropdown.Item>
               <NavDropdown.Item onClick={() => handleLangueChange('en')}>Anglais</NavDropdown.Item>
               <NavDropdown.Item onClick={() => handleLangueChange('ja')}>Japonais</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Form className="d-flex" onSubmit={handleSearch}>
