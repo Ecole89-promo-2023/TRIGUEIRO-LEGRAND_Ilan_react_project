@@ -8,10 +8,15 @@ const CardInfo = ({ pokemon }) => {
   }
 
   const navigate = useNavigate();
+  const langue = localStorage.getItem('langue') || 'fr';
 
   const handleCardClick = () => {
     const baseName = pokemon.name.split(' ')[0];
     navigate(`/card?name=${baseName}`);
+  };
+
+  const handleMoreCardsClick = () => {
+    navigate(`/cards?langue=${langue}`);
   };
 
   return (
@@ -89,7 +94,7 @@ const CardInfo = ({ pokemon }) => {
                 <Button variant="warning" className="rounded-pill fw-bold" onClick={handleCardClick}>
                   Chercher {pokemon.name.split(' ')[0]} dans le Pokédex
                 </Button>
-                <Button href="/cards" variant="danger" className="rounded-pill fw-bold">Plus de cartes</Button>
+                <Button onClick={handleMoreCardsClick} variant="danger" className="rounded-pill fw-bold">Plus de cartes</Button>
               </div>
             </Card.Body>
           </Col>

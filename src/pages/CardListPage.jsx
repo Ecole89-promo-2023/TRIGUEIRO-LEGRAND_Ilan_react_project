@@ -1,32 +1,46 @@
 import { useEffect, useState } from 'react';
 import { Endpoints } from "../_services/endpoints.services";
+import { useLocation, useNavigate } from 'react-router-dom';
 import Card from "../components/Cards";
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
-import Button from 'react-bootstrap/Button';
 import Pagination from 'react-bootstrap/Pagination';
 
 const CardListPage = () => {
+  const [langue, setLangue] = useState('fr');
   const [cards, setCards] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 39;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
 
   useEffect(() => {
+    const storedLangue = searchParams.get('langue');
+    if (storedLangue) {
+      setLangue(storedLangue);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    const storedLangue = localStorage.getItem('langue');
     const storedCards = localStorage.getItem('cards');
-    if (storedCards) {
+
+    if (storedLangue === langue && storedCards) {
       console.log("Using cached data from local storage");
       setCards(JSON.parse(storedCards));
       setLoaded(true);
     } else {
       console.log("Fetching data from API");
-      Endpoints.getAllCards()
+      Endpoints.getAllCards(langue)
         .then((response) => {
           console.log(response.data);
           setCards(response.data);
           localStorage.setItem('cards', JSON.stringify(response.data));
+          localStorage.setItem('langue', langue);
           setLoaded(true);
         })
         .catch((error) => {
@@ -34,7 +48,7 @@ const CardListPage = () => {
           setError(error);
         });
     }
-  }, []);
+  }, [langue]);
 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;

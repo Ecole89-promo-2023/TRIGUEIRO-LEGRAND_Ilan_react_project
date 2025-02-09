@@ -1,4 +1,4 @@
-import { Navbar, Container, Nav, Button, Form, Row, Col, NavDropdown} from 'react-bootstrap';
+import { Navbar, Container, Nav, Button, Form, Row, Col, NavDropdown } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,7 +6,7 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [darkMode, setDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem('darkMode')
-    return savedTheme == 'true';
+    return savedTheme === 'true';
   });
   const navigate = useNavigate();
 
@@ -33,6 +33,10 @@ const Header = () => {
     setDarkMode(!darkMode);
   };
 
+  const handleLangueChange = (langue) => {
+    navigate(`/cards?langue=${langue}`);
+  };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary sticky-top">
       <Container>
@@ -41,16 +45,12 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/cards">Listes des cartes</Nav.Link>
-          <NavDropdown title="Langues" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Français</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Englais
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Japonais</NavDropdown.Item>
+            <NavDropdown title="Langues" id="basic-nav-dropdown">
+              <NavDropdown.Item onClick={() => handleLangueChange('fr')}>Français</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => handleLangueChange('en')}>Anglais</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => handleLangueChange('ja')}>Japonais</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Form className="d-flex" onSubmit={handleSearch}>

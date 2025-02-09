@@ -13,10 +13,11 @@ const CardByNamePage = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const name = searchParams.get('name');
+  const [langue, setLangue] = useState(localStorage.getItem('langue') || 'fr');
 
   useEffect(() => {
     if (name) {
-      Endpoints.getCardByName(name)
+      Endpoints.getCardByName(langue, name)
         .then((response) => {
           setCards(response.data);
           setLoaded(true);
@@ -26,7 +27,7 @@ const CardByNamePage = () => {
           setError(error);
         });
     }
-  }, [name]);
+  }, [name, langue]);
 
   if (!loaded) {
     return (

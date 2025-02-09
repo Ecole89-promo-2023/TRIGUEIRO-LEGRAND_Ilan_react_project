@@ -5,13 +5,14 @@ import { Spinner } from 'react-bootstrap';
 import CardInfo from "../components/CardInfo";
 
 const CardInfoPage = () => {
-    const {id} = useParams();
+    const { id } = useParams();
     const [card, setCard] = useState([]);
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(null);
+    const [langue, setLangue] = useState(localStorage.getItem('langue') || 'fr');
 
     useEffect(() => {
-        Endpoints.getCard(id)
+        Endpoints.getCard(langue, id)
         .then((response) => {
             console.log(response.data);
             setCard(response.data);
@@ -21,7 +22,7 @@ const CardInfoPage = () => {
             console.error(error);
             setError(error);
         });
-    }, [id]);
+    }, [id, langue]);
 
     if (!loaded) {
         return (

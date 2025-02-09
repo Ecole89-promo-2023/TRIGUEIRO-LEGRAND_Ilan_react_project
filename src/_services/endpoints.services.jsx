@@ -1,15 +1,15 @@
 import API from "./caller.services";
 
-let getAllCards = () => {
-    return API.get("fr/cards");
+let getAllCards = (langue) => {
+    return API.get(langue + "/cards");
 }
 
-let getCard = (id) => {
-    return API.get(`fr/cards/${id}`);
+let getCard = (langue, id) => {
+    return API.get(langue + `/cards/${id}`);
 }
 
-let getCardByName = (name) => { 
-    return API.get(`fr/cards?name=${name}`);
+let getCardByName = (langue , name) => { 
+    return API.get(langue + `/cards?name=${name}`);
 }
 
 export const Endpoints = { getAllCards , getCard, getCardByName };
