@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
+import Pagination from 'react-bootstrap/Pagination';
 
 const CardListPage = () => {
   const [cards, setCards] = useState([]);
@@ -38,8 +39,29 @@ const CardListPage = () => {
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const currentCards = cards.slice(indexOfFirstCard, indexOfLastCard);
+  const totalPages = Math.ceil(cards.length / cardsPerPage);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const renderPaginationItems = () => {
+    const items = [];
+    const startPage = Math.floor((currentPage - 1) / 5) * 5 + 1;
+    const endPage = Math.min(startPage + 4, totalPages);
+
+    for (let number = startPage; number <= endPage; number++) {
+      items.push(
+        <Pagination.Item
+          key={number}
+          active={number === currentPage}
+          onClick={() => paginate(number)}
+        >
+          {number}
+        </Pagination.Item>
+      );
+    }
+
+    return items;
+  };
 
   if (!loaded) {
     return (
@@ -58,21 +80,13 @@ const CardListPage = () => {
               return <Card card={card} key={index} />
             })}
           </Row>
-          <div className="d-flex justify-content-center m-4">
-            <Button
-              onClick={() => paginate(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="me-2"
-            >
-              Précédent
-            </Button>
-            <Button
-              onClick={() => paginate(currentPage + 1)}
-              disabled={indexOfLastCard >= cards.length}
-            >
-              Suivant
-            </Button>
-          </div>
+          <Pagination className="justify-content-center mt-4">
+            <Pagination.First onClick={() => paginate(1)} disabled={currentPage === 1} />
+            <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
+            {renderPaginationItems()}
+            <Pagination.Next onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages} />
+            <Pagination.Last onClick={() => paginate(totalPages)} disabled={currentPage === totalPages} />
+          </Pagination>
         </Container>
       </>
     )

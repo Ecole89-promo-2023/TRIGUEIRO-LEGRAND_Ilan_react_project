@@ -22,13 +22,13 @@ const CardInfo = ({ pokemon }) => {
             <Card.Img 
               variant="top" 
               src={pokemon.image + "/high.webp"} 
-              className="img-fluid p-3"
+              className="img-fluid mx-auto mt-3 d-block w-75"
             />
           </Col>
           <Col md={6}>
             <Card.Body>
               <Card.Title>
-                <img className="img-fluid" src={pokemon.set.logo + ".webp"} alt="" />
+                <img className="img-fluid w-50" src={pokemon.set.logo + ".webp"} alt="" />
                 <h2 className="fw-bold">{pokemon.name}</h2>
                 <h5 className="text-muted">{pokemon.category}</h5>
               </Card.Title>
@@ -89,7 +89,7 @@ const CardInfo = ({ pokemon }) => {
                 <Button variant="warning" className="rounded-pill fw-bold" onClick={handleCardClick}>
                   Chercher {pokemon.name.split(' ')[0]} dans le Pokédex
                 </Button>
-                <Button href="/" variant="danger" className="rounded-pill fw-bold">Plus de cartes</Button>
+                <Button href="/cards" variant="danger" className="rounded-pill fw-bold">Plus de cartes</Button>
               </div>
             </Card.Body>
           </Col>
