@@ -16,7 +16,7 @@ const CardInfo = ({ pokemon }) => {
   };
 
   const handleMoreCardsClick = () => {
-    navigate(`/cards?langue=${langue}`);
+    navigate(`/cards?langue=${localStorage.getItem('langue')}`);
   };
 
   return (
