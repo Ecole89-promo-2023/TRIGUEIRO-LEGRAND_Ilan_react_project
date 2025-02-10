@@ -8,7 +8,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Pagination from 'react-bootstrap/Pagination';
 
 const CardListPage = () => {
-  const [langue, setLangue] = useState('fr');
+  const [langue, setLangue] = useState(null);
   const [cards, setCards] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
@@ -22,31 +22,37 @@ const CardListPage = () => {
     const storedLangue = searchParams.get('langue');
     if (storedLangue) {
       setLangue(storedLangue);
+    } else {
+      setLangue(localStorage.getItem('langue') || 'fr');
     }
   }, [location.search]);
 
   useEffect(() => {
-    const storedLangue = localStorage.getItem('langue');
-    const storedCards = localStorage.getItem('cards');
+    if (langue) {
+      const storedLangue = localStorage.getItem('langue');
+      const storedCards = localStorage.getItem(`cards_${langue}`);
+      const isLoaded = localStorage.getItem('loaded') === 'true';
 
-    if (storedLangue === langue && storedCards) {
-      console.log("Using cached data from local storage");
-      setCards(JSON.parse(storedCards));
-      setLoaded(true);
-    } else {
-      console.log("Fetching data from API");
-      Endpoints.getAllCards(langue)
-        .then((response) => {
-          console.log(response.data);
-          setCards(response.data);
-          localStorage.setItem('cards', JSON.stringify(response.data));
-          localStorage.setItem('langue', langue);
-          setLoaded(true);
-        })
-        .catch((error) => {
-          console.error(error);
-          setError(error);
-        });
+      if (storedLangue === langue && storedCards && isLoaded) {
+        console.log("Using cached data from local storage");
+        setCards(JSON.parse(storedCards));
+        setLoaded(true);
+      } else {
+        console.log("Fetching data from API");
+        Endpoints.getAllCards(langue)
+          .then((response) => {
+            console.log(response.data);
+            setCards(response.data);
+            localStorage.setItem(`cards_${langue}`, JSON.stringify(response.data));
+            localStorage.setItem('langue', langue);
+            localStorage.setItem('loaded', 'true');
+            setLoaded(true);
+          })
+          .catch((error) => {
+            console.error(error);
+            setError(error);
+          });
+      }
     }
   }, [langue]);
 
@@ -77,7 +83,7 @@ const CardListPage = () => {
     return items;
   };
 
-  if (!loaded) {
+  if (!langue || !loaded) {
     return (
       <Spinner animation="border" role="status">
         <span className="visually-hidden">Loading...</span>

@@ -8,7 +8,6 @@ const CardInfo = ({ pokemon }) => {
   }
 
   const navigate = useNavigate();
-  const langue = localStorage.getItem('langue') || 'fr';
 
   const handleCardClick = () => {
     const baseName = pokemon.name.split(' ')[0];
@@ -16,7 +15,7 @@ const CardInfo = ({ pokemon }) => {
   };
 
   const handleMoreCardsClick = () => {
-    navigate(`/cards?langue=${langue}`);
+    navigate(`/cards?langue=${localStorage.getItem('langue')}`);
   };
 
   return (

@@ -37,6 +37,10 @@ const Header = () => {
     navigate(`/cards?langue=${langue}`);
   };
 
+  const handleMoreCardsClick = () => {
+    navigate(`/cards?langue=${localStorage.getItem('langue')}`);
+  };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary sticky-top">
       <Container>
@@ -44,7 +48,7 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/cards">Listes des cartes</Nav.Link>
+            <Nav.Link onClick={handleMoreCardsClick} >Listes des cartes</Nav.Link>
             <NavDropdown title="Langues" id="basic-nav-dropdown">
               <NavDropdown.Item onClick={() => handleLangueChange('fr')}>Français</NavDropdown.Item>
               <NavDropdown.Item onClick={() => handleLangueChange('en')}>Anglais</NavDropdown.Item>
