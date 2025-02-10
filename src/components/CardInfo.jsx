@@ -27,7 +27,7 @@ const CardInfo = ({ pokemon }) => {
             <Card.Img 
               variant="top" 
               src={pokemon.image + "/high.webp"} 
-              className="img-fluid mx-auto mt-3 d-block w-75"
+              className="img-fluid mx-auto mt-3 mb-3 d-block w-75"
             />
           </Col>
           <Col md={6}>
